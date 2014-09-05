@@ -13,6 +13,7 @@
                     <TranslateTransform3D OffsetX="-5" OffsetY="0" OffsetZ="0"/>
                 </local:DemoElement3D.Transform>
             </local:DemoElement3D>
+            <h:PipeVisual3D x:Name="Pipemodel" />
         </h:HelixViewport3D>
     </DockPanel>
 </Window>

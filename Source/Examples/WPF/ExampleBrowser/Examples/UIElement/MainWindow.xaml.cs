@@ -13,6 +13,8 @@ namespace UIElementDemo
     using ExampleBrowser;
 
     using HelixToolkit.Wpf;
+    using System.Windows.Media;
+    using System.Windows.Shapes;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -36,6 +38,7 @@ namespace UIElementDemo
             element.MouseDown += this.ContainerElementMouseDown;
             container.Children.Add(element);
             view1.Children.Add(container);
+            pipetexture();
         }
 
         private void ContainerElementMouseDown(object sender, MouseButtonEventArgs e)
@@ -52,6 +55,39 @@ namespace UIElementDemo
         private void ZoomExtents_Click(object sender, RoutedEventArgs e)
         {
             view1.ZoomExtents(500);
+        }
+
+        private void pipetexture()
+        {
+            Rectangle exampleRectangle = new Rectangle();
+            exampleRectangle.Width = 75;
+            exampleRectangle.Height = 75;
+
+            // Create a DrawingBrush and use it to
+            // paint the rectangle.
+            DrawingBrush myBrush = new DrawingBrush();
+
+            GeometryDrawing backgroundSquare = new GeometryDrawing(System.Windows.Media.Brushes.White, null, new RectangleGeometry(new Rect(0, 0, 100, 100)));
+
+            GeometryGroup aGeometryGroup = new GeometryGroup();
+            aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(0, 0, 50, 50)));
+            aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(50, 50, 50, 50)));
+
+            LinearGradientBrush checkerBrush = new LinearGradientBrush();
+            checkerBrush.GradientStops.Add(new GradientStop(Colors.Black, 0.0));
+            checkerBrush.GradientStops.Add(new GradientStop(Colors.Gray, 1.0));
+
+            GeometryDrawing checkers = new GeometryDrawing(checkerBrush, null, aGeometryGroup);
+
+            DrawingGroup checkersDrawingGroup = new DrawingGroup();
+            checkersDrawingGroup.Children.Add(backgroundSquare);
+            checkersDrawingGroup.Children.Add(checkers);
+
+            myBrush.Drawing = checkersDrawingGroup;
+            myBrush.Viewport = new Rect(0, 0, 0.25, 0.25);
+            myBrush.TileMode = TileMode.Tile;
+
+            Pipemodel.Fill = myBrush;
         }
     }
 }
